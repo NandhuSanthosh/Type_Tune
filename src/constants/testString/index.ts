@@ -1,0 +1,2 @@
+const str = "Adding extra space between words. want to compare. This code will calculate the absolute difference in seconds between the two dates. If you want to find the signed difference"
+export default str

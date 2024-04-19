@@ -1,0 +1,15 @@
+
+#cursor {
+    animation: blink 0.8s infinite;
+    top: 0;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+
+.letter {
+    width: 1ch;
+}
