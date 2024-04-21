@@ -7,9 +7,11 @@ const template = ({
     children: React.ReactNode;
   }>) => {
   return (
-    <div className="p-3 w-full md:w-8/12 flex flex-col items-center" >
+    <div className=" bg-black-lite flex justify-center h-lvh" >
+      <div className="p-3 w-full md:w-8/12 flex flex-col items-center">
         <Header />
         {children}
+      </div>
     </div>
   )
 }

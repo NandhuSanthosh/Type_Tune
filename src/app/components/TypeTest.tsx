@@ -24,7 +24,7 @@ const TypeTest = () => {
   const [isStarted, setIsStarted] = useState<Boolean>(false)
   const [startingTime, setStartingTime] = useState<Date>()
   const [finalDuration, setFinalDuration] = useState<number>()
-  const [testDuration, setTestDuration] = useState<number>(60)
+  const [testDuration, setTestDuration] = useState<number>(15)
   const [showingResult, setShowingResult] = useState<Boolean>(false)
   const [result, setResult] = useState<Result[]>([])
   const [timer, setTimer] = useState<number>(0)
@@ -44,14 +44,14 @@ const TypeTest = () => {
     let completedArray = completed.split(' ')
 
     let completedLength = completedArray.length;
-    if(completedArray[completedLength - 1].length > practiceStringArray[completedLength - 1].length) return;
-
-
+    
+    
     if( completedArray.length > practiceStringArray.length ) {
       const timeDiff = Math.abs(new Date().getTime() - (startingTime as Date).getTime()) / 1000
       testCompleted(timeDiff);
       return;
     }
+    if(completedArray[completedLength - 1].length > practiceStringArray[completedLength - 1].length) return;
 
     setCompleted(completedArray)
   }

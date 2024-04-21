@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto,  Roboto_Mono } from "next/font/google";
-import "../globals.css";
+import "./globals.css";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const robotoMono = Roboto_Mono({
   subsets: ['latin'],
@@ -22,8 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={robotoMono.className + " bg-black-lite overflow-hidden flex justify-center" } >
-        {children}
+      <body className={robotoMono.className + " overflow-hidden" } >
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID || ""}>
+            {children}
+        </GoogleOAuthProvider>;
       </body>
     </html>
   );
