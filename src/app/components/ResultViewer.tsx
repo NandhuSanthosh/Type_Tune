@@ -9,10 +9,11 @@ type Props = {
   result: Result[], 
   completed: string[], 
   practiceStringArray: string[], 
-  handleRestart: () => void
+  handleRestart: () => void, 
+  handleNext: () => void
 }
 
-const ResultViewer = ({duration, result, completed, practiceStringArray, handleRestart}: Props) => {
+const ResultViewer = ({duration, result, completed, practiceStringArray, handleRestart, handleNext}: Props) => {
 
   const [wpm, setWPM] = useState<number>(0)
   const [accuracy, setAccuracy] = useState<number>(0)
@@ -45,7 +46,7 @@ const ResultViewer = ({duration, result, completed, practiceStringArray, handleR
       </div>
 
       <div className='flex gap-10 mt-10 h-10'>
-              <button onClick={() => {}} className='text-zinc-500 hover:text-gray-200 '>
+              <button onClick={handleNext} className='text-zinc-500 hover:text-gray-200 '>
                 <TbPlayerTrackNextFilled size={"20px"}/>
               </button>
               <button onClick={handleRestart} className='text-zinc-500 hover:text-gray-200 '>

@@ -8,18 +8,20 @@ import { FaRepeat } from "react-icons/fa6";
 import { FaStop } from "react-icons/fa";
 import { FaKeyboard } from "react-icons/fa";
 
-import testString from '@/constants/testString'
+import { pickString } from '@/utils';
 import Letter from './Letter'
 import "./styles.css"
 import {ControllerOptins, TimeOptions} from './ControllerOptins';
 import { Result } from '@/types';
 import ResultViewer from './ResultViewer';
+import { isNumber } from 'util';
+import { channel } from 'diagnostics_channel';
 
 const TypeTest = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const [isNumbers, setIsNumbers] = useState<Boolean>(false)
-  const [isPunctuation, setIsPunctuation] = useState<Boolean>(false)
+  const [isNumbers, setIsNumbers] = useState<boolean>(false)
+  const [isPunctuation, setIsPunctuation] = useState<boolean>(false)
 
   const [isStarted, setIsStarted] = useState<Boolean>(false)
   const [startingTime, setStartingTime] = useState<Date>()
@@ -32,9 +34,14 @@ const TypeTest = () => {
   const [calculateIntervalId, setCalculateIntervalId] = useState<NodeJS.Timeout | null>(null)
   const [calculateRerender, setCalcuateRerender] = useState<number>(0)
   
-  const practiceString = testString
-  const practiceStringArray = testString.split(" ")
+  // const practiceStringArray = practiceString.split(" ")
   const [completed, setCompleted] = useState<string[]>([""])
+  
+  const [practiceStringArray, setPracticeStringArray] = useState([" "])
+  useEffect( ()=> {
+    const practiceString = pickString(isPunctuation, isNumbers);
+    setPracticeStringArray(practiceString.split(" "))
+  }, [isPunctuation, isNumbers])
 
   function handleInput(str: string){
     if(!isStarted) return;
@@ -149,10 +156,20 @@ const TypeTest = () => {
     setIntervalId(id)
   }
 
+  function changeString(){
+    setPracticeStringArray(pickString(isPunctuation, isNumbers).split(" "))
+  }
+
   function handleRestart(){
     setShowingResult(false)
     handleStop();
     handleStart();
+  }
+
+  function nextTest(){
+    changeString();
+    setShowingResult(false)
+    handleStop();
   }
 
   function handleStop(){
@@ -205,7 +222,7 @@ const TypeTest = () => {
       {
         // result
         showingResult ? 
-          <ResultViewer result={result} duration={finalDuration as number} completed={completed} practiceStringArray={practiceStringArray} handleRestart={handleRestart}/>
+          <ResultViewer result={result} duration={finalDuration as number} completed={completed} practiceStringArray={practiceStringArray} handleRestart={handleRestart} handleNext={nextTest}/>
         : 
           <>
             {/* controlles */}
@@ -213,7 +230,7 @@ const TypeTest = () => {
               !isStarted && timer == 0 &&
               <div className='absolute top-10 left-0 right-0 flex justify-center '>
                 <div className='bg-black-dark rounded-md px-10 py-2 flex items-center gap-10 w-max '>
-                  <button onClick={() => {}} className='text-zinc-500 hover:text-gray-200'>
+                  <button onClick={changeString} className='text-zinc-500 hover:text-gray-200'>
                     <FaKeyboard />
                   </button>
                   <div className='w-1 h-6 bg-black-lite'></div>
