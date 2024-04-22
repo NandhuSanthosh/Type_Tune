@@ -17,21 +17,21 @@ const ResultViewer = ({duration, result, completed, practiceStringArray, handleR
 
   const [wpm, setWPM] = useState<number>(0)
   const [accuracy, setAccuracy] = useState<number>(0)
+  const [actualResult, setActualResult] = useState<any>([])
 
   useEffect( () => {
-    console.log(duration, completed, practiceStringArray)
+    setActualResult(result)
+
     const correctWords = completed.filter( (word, index) => {
       return word == practiceStringArray[index]
     })
-
     
     let overAllWPM = Math.round(correctWords.length / (duration / 60))
     let accuracy = Math.round((correctWords.length / completed.length) * 100)
-    console.log(overAllWPM, accuracy, correctWords.length)
 
     setWPM(overAllWPM)
     setAccuracy(accuracy)
-  }, [])
+  }, [completed])
   return (
     <>
       <div className='w-full pt-40 flex gap-10 items-center'>
@@ -41,7 +41,7 @@ const ResultViewer = ({duration, result, completed, practiceStringArray, handleR
         </div>
 
         <div className='flex justify-center flex-1'>
-          <Chart result={result}/>
+          <Chart result={actualResult}/>
         </div>
       </div>
 

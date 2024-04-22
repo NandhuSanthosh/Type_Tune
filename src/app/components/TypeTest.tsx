@@ -53,10 +53,12 @@ const TypeTest = () => {
     let completedLength = completedArray.length;
     
     
-    if( completedArray.length > practiceStringArray.length ) {
+    if( completedArray.length >= practiceStringArray.length && 
+      completedArray[completedArray.length - 1].length == practiceStringArray[practiceStringArray.length - 1].length ) {
+      setCompleted(completedArray)
       const timeDiff = Math.abs(new Date().getTime() - (startingTime as Date).getTime()) / 1000
       testCompleted(timeDiff);
-      return;
+      return 
     }
     if(completedArray[completedLength - 1].length > practiceStringArray[completedLength - 1].length) return;
 
@@ -68,7 +70,6 @@ const TypeTest = () => {
   }
 
   function updateIsPunctuation(){
-    console.log("updateing is punctuation")
     setIsPunctuation(!isPunctuation)
   }
 
@@ -96,6 +97,7 @@ const TypeTest = () => {
   }
 
   useEffect( () => {
+    console.log(calculateRerender)
     if(calculateRerender == 0) {
       console.log("cr = 0")
       return;
@@ -111,7 +113,6 @@ const TypeTest = () => {
     })
     const wpm = Math.round( correctWords.length / differenceInMinutes)
     const err = slicedCompleted.length - correctWords.length
-    console.log(timeDiff)
 
     const r: Result = {
       raw, 
@@ -121,10 +122,12 @@ const TypeTest = () => {
     }
 
     setResult([...result, r])
+    console.log(result)
   }, [calculateRerender])
   
   function handleStart() {
     setCompleted([""])
+    setResult([])
     startTimer(3, () => {
       setStartingTime(new Date())
       setIsStarted(true)
@@ -147,12 +150,10 @@ const TypeTest = () => {
       sec--;
       setTimer(sec)
       if(sec == 0) {
-        console.log("deleting ", id)
         clearInterval(id);
         callback();
       }
     }, 1000)
-    console.log("created ", id)
     setIntervalId(id)
   }
 

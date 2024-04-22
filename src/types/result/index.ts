@@ -1,8 +1,8 @@
 interface Result {
-    wpm: Number, 
-    err: Number, 
-    raw: Number, 
-    time: Number
+    wpm: number, 
+    err: number, 
+    raw: number, 
+    time: number
 }
 
 export default Result;
