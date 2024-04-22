@@ -22,6 +22,10 @@ const ResultViewer = ({duration, result, completed, practiceStringArray, handleR
   useEffect( () => {
     setActualResult(result)
 
+    if(completed[completed.length - 1] != practiceStringArray[completed.length - 1]) {
+      completed.pop();
+    }
+
     const correctWords = completed.filter( (word, index) => {
       return word == practiceStringArray[index]
     })
